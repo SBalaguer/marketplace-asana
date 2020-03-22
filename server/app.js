@@ -16,6 +16,8 @@ const authenticationRouter = require("./routes/api/authentication");
 const userRouter = require("./routes/api/user");
 const productRouter = require("./routes/api/product");
 const reviewRouter = require("./routes/api/review");
+const commentRouter = require("./routes/api/comment");
+const transactionsRouter = require("./routes/api/transaction");
 
 const app = express();
 
@@ -48,6 +50,8 @@ app.use("/api/authentication", authenticationRouter);
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/review", reviewRouter);
+app.use("/api/comment", commentRouter);
+app.use("/api/transaction", transactionsRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
