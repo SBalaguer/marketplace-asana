@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import MercadoPago from "./components/mercadoPago";
+import MercadoPago from "./components/MercadoPago";
+import MercadoPago2 from "./components/MercadoPago2";
+import MercadoPago3 from "./components/MercadoPago3";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
           Learn React
         </a>
       </header>
-      <MercadoPago amount={100} />
+      {/* <MercadoPago amount={100} /> */}
+      {/* <MercadoPago2 /> */}
+      <MercadoPago3 />
     </div>
   );
 }

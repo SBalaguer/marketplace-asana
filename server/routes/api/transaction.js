@@ -6,33 +6,51 @@ const { Router } = require("express");
 const mercadopago = require("mercadopago");
 
 const bcryptjs = require("bcryptjs");
-const User = require("./../../models/user");
 
 const transactionRouter = new Router();
 
-mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN);
+mercadopago.configure({
+  access_token: process.env.ACCESS_TOKEN
+});
 
 transactionRouter.post("/payment", async (req, res, next) => {
-  console.log("im being called");
-  console.log(req.body);
-  const token = req.body.token;
-  const payment_method_id = req.body.payment_method_id;
-  const installments = req.body.installments;
-  const issuer_id = req.body.issuer_id;
-
-  const payment_data = {
-    transaction_amount: 138,
-    token: token,
-    description: "Sleek Marble Watch",
-    installments: installments,
-    payment_method_id: payment_method_id,
-    issuer_id: issuer_id,
-    payer: {
-      email: "koby@gmail.com"
+  const preference = {
+    items: [
+      {
+        title: "Asana Test",
+        unit_price: 100,
+        quantity: 1
+      }
+    ],
+    back_urls: {
+      success: "https://www.tu-sitio/success",
+      failure: "http://www.tu-sitio/failure",
+      pending: "http://www.tu-sitio/pending"
     }
   };
-  const payment = await mercadopago.payment.save(payment_data);
-  console.log(payment);
+
+  mercadopago.preferences
+    .create(preference)
+    .then(response => {
+      //console.log(response);
+      //res.redirect(`${response.body.sandbox_init_point}`);
+      res.json({ response });
+      // // Este valor reemplazará el string "$$init_point$$" en tu HTML
+      // global.init_point = response.body.init_point;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+transactionRouter.post("/process-payment", (req, res, next) => {
+  console.log("im being called");
+  console.log(req);
+});
+
+transactionRouter.get("/process-payment", (req, res, next) => {
+  console.log("im being called");
+  console.log(req);
 });
 
 module.exports = transactionRouter;
